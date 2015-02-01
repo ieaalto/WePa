@@ -22,8 +22,8 @@ class RatingsController < ApplicationController
   end
 
   def destroy
-    if @rating.user == current_user
-      rating = Rating.find(params[:id])
+    rating = Rating.find(params[:id])
+    if rating.user == current_user
       rating.delete
       redirect_to :back
     else
