@@ -9,14 +9,26 @@ class RatingsController < ApplicationController
   end
 
   def create
-    Rating.create params.require(:rating).permit(:score, :beer_id)
-    redirect_to ratings_path
+    @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
+    if @rating.save
+      session[:last_rating] = "#{@rating.beer.name} #{@rating.score} points"
+      current_user.ratings << @rating
+      redirect_to ratings_path
+    else
+      @beers = Beer.all
+      render :new
+    end
+
   end
 
   def destroy
-    rating = Rating.find(params[:id])
-    rating.delete
-    redirect_to ratings_path
+    if @rating.user == current_user
+      rating = Rating.find(params[:id])
+      rating.delete
+      redirect_to :back
+    else
+      redirect_to :root, notice: "Not logged in!"
+    end
   end
 
 end
