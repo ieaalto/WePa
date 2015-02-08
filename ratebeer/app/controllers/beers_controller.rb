@@ -1,5 +1,6 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
+  before_action :set_breweries_and_styles, only:[:edit, :create, :new]
 
   # GET /beers
   # GET /beers.json
@@ -15,8 +16,6 @@ class BeersController < ApplicationController
   # GET /beers/new
   def new
     @beer = Beer.new
-    @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale Ale", "IPA", "Porter"]
   end
 
   # GET /beers/1/edit
@@ -38,6 +37,11 @@ class BeersController < ApplicationController
       end
     end
 
+  end
+
+  def set_breweries_and_styles
+    @breweries = Brewery.all
+    @styles = ["Weizen", "Lager", "Pale Ale", "IPA", "Porter"]
   end
 
   # PATCH/PUT /beers/1
