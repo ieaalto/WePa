@@ -9,7 +9,7 @@ describe "User" do
     it "can signin with right credentials" do
       sign_in(username:"Pekka", password:"Foobar1")
 
-      expect(page).to have_content 'Welcome back!'
+      expect(page).to have_content 'Welcome!'
       expect(page).to have_content 'Pekka'
     end
 
@@ -17,7 +17,7 @@ describe "User" do
       sign_in(username:"Pekka", password:"wrong")
 
       expect(current_path).to eq(signin_path)
-      expect(page).to have_content 'username and password do not match'
+      expect(page).to have_content 'Invalid password or username'
     end
 
     it "has his/her favorite style and brewery displayed" do

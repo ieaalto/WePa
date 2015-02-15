@@ -59,14 +59,14 @@ RSpec.describe User, type: :model do
     let(:user){FactoryGirl.create(:user)}
 
     it 'method exists' do
-        expect(user).to respond_to(:favorite_style)
+      expect(user).to respond_to(:favorite_style)
     end
 
     it 'is the one with highest rated beers if several rated' do
-        create_beers_with_ratings(5,10,15, user)
-        beer = create_beer_with_rating(50, user)
-        beer.style = "IPA"
-        expect(user.favorite_style).to eq("IPA")
+      create_beers_with_ratings(5,10,15, user)
+      beer = create_beer_with_rating(50, user)
+      beer.style = "IPA"
+      expect(user.favorite_style).to eq("IPA")
     end
   end
 
@@ -74,15 +74,15 @@ RSpec.describe User, type: :model do
     let(:user){FactoryGirl.create(:user)}
 
     it 'method exists' do
-            expect(user).to respond_to(:favorite_brewery)
-        end
+      expect(user).to respond_to(:favorite_brewery)
+    end
 
-        it 'is the one with highest rated beers if several rated' do
-            create_beers_with_ratings(5,10,15, user)
-            beer = create_beer_with_rating(50, user)
-            beer.brewery = FactoryGirl.create(:brewery)
-            expect(user.favorite_brewery).to eq(beer.brewery)
-        end
+    it 'is the one with highest rated beers if several rated' do
+      create_beers_with_ratings(5,10,15, user)
+      beer = create_beer_with_rating(50, user)
+      beer.brewery = FactoryGirl.create(:brewery)
+      expect(user.favorite_brewery).to eq(beer.brewery)
+    end
   end
 end
 
