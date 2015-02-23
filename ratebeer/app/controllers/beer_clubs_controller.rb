@@ -1,5 +1,7 @@
 class BeerClubsController < ApplicationController
   before_action :set_beer_club, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_admin?, only: [:destroy]
+  before_filter :authenticate, only: [:create, :update]
 
   # GET /beer_clubs
   # GET /beer_clubs.json

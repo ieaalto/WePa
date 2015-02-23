@@ -32,4 +32,12 @@ Ratebeer::Application.routes.draw do
 
   root 'breweries#index'
 
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
+
+  resources :users do
+    post 'suspend', on: :member
+  end
+
 end

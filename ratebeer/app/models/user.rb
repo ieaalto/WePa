@@ -58,4 +58,9 @@ class User < ActiveRecord::Base
     return brewery_scores.sum / brewery_ratings.count
   end
 
+  def self.top_raters(n)
+    by_no_of_raters = User.all.sort_by{|b| -b.ratings.count}
+    by_no_of_raters[0,n]
+  end
+
 end

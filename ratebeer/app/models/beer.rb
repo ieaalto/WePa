@@ -12,4 +12,9 @@ class Beer < ActiveRecord::Base
     return name+", "+brewery.name
   end
 
+  def self.top(n)
+    best_rated = Beer.all.sort_by{ |b| -(b.average_rating||0) }
+    best_rated[0,n]
+  end
+
 end

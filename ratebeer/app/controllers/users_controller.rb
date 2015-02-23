@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :suspend]
+  before_action :authenticate_admin, only: [:suspend]
 
   # GET /users
   # GET /users.json
@@ -67,6 +68,16 @@ class UsersController < ApplicationController
       end
     else
       redirect_to :root, notice:"Not logged in!"
+    end
+  end
+
+  def suspend
+    if @user.suspended
+      @user.update_attribute(:suspended, false)
+      redirect_to users_path, notice: "User no longer suspended!"
+    else
+      @user.update_attribute(:suspended, true)
+      redirect_to users_path, notice: "User suspended!"
     end
   end
 

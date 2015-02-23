@@ -1,6 +1,6 @@
 <h1>Listing beers</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -19,8 +19,8 @@
         <td><%= link_to beer.style, style_path(beer.style) %></td>
         <% brewery = Brewery.find_by(id:beer.brewery_id)%>
         <td><%= link_to brewery.name, brewery_path(brewery) %></td>
-        <td><%= link_to 'Edit', edit_beer_path(beer) %></td>
-        <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_beer_path(beer) ,class:"btn btn-primary" %></td>
+        <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-danger"  %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,5 +28,4 @@
 
 <br>
 
-<%= link_to 'New Beer', new_beer_path %>
-<%= link_to 'List of Breweries', breweries_path %>
+<%= link_to 'New Beer', new_beer_path,class:"btn btn-primary" %>
