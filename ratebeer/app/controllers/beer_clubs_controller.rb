@@ -1,6 +1,6 @@
 class BeerClubsController < ApplicationController
   before_action :set_beer_club, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_admin?, only: [:destroy]
+  before_filter :authenticate_admin, only: [:destroy]
   before_filter :authenticate, only: [:create, :update]
 
   # GET /beer_clubs
@@ -16,6 +16,8 @@ class BeerClubsController < ApplicationController
       @membership = Membership.new
       @membership.user = current_user
       @membership.beer_club = @beer_club
+      @members = Membership.confirmed(@beer_club)
+      @unconfirmed = Membership.unconfirmed(@beer_club)
     end
   end
 
@@ -35,6 +37,7 @@ class BeerClubsController < ApplicationController
 
     respond_to do |format|
       if @beer_club.save
+        Membership.create(user_id:current_user.id, beer_club_id:@beer_club.id, confirmed:true)
         format.html { redirect_to @beer_club, notice: 'Beer club was successfully created.' }
         format.json { render action: 'show', status: :created, location: @beer_club }
       else
@@ -76,6 +79,6 @@ class BeerClubsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_club_params
-      params.require(:beer_club).permit(:name, :founded, :city)
+      params.require(:beer_club).permit(:name, :founded, :city, :id)
     end
 end

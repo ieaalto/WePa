@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h2> <%= @beer_club.name %></h2>
+<h1> <%= @beer_club.name %></h1>
 
 <p>
   <strong>Founded:</strong>
@@ -12,7 +12,26 @@
   <%= @beer_club.city %>
 </p>
 
+<h2>Members</h2>
+
+<ul>
+  <%@members.each do |m| %>
+  <li><%= link_to m.user.username, user_path(m.user)%></li>
+  <%end%>
+</ul>
+
 <%if current_user%>
+    <% if Membership.is_confirmed?(current_user, @beer_club)%>
+        <h2>Outstanding applications</h2>
+        <% if @unconfirmed.count == 0 %>
+            <p>No outstanding applications!</p>
+        <%end %>
+        <ul>
+          <%@unconfirmed.each do |m| %>
+              <li><%= link_to m.user.username, user_path(m.user)%> <%= link_to "confirm", confirm_membership_path(m), method: :post, class: "btn btn-primary" %></li>
+          <%end%>
+        </ul>
+    <% end%>
    <% mship = Membership.is_member(current_user, @beer_club)%>
    <%if !mship.nil?%>
         <% @membership = mship%>

@@ -25,16 +25,29 @@
 </ul>
 
 <h3>Clubs</h3>
+<strong>Member of</strong>
 <ul>
   <% @user.beer_clubs.each do |club| %>
-      <li> <%= link_to club, beer_club_path(club.id)%></li>
+      <%if Membership.is_confirmed?(@user, club) %>
+        <li> <%= link_to club, beer_club_path(club.id)%></li>
+      <% end%>
   <% end %>
 </ul>
+
+<strong>Applied membership of</strong>
+<ul>
+  <% @user.beer_clubs.each do |club| %>
+      <%unless Membership.is_confirmed?(@user, club) %>
+         <li> <%= link_to club, beer_club_path(club.id)%></li>
+      <%end%>
+  <% end %>
+</ul>
+
 <%if @user == current_user %>
     <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %> | 
     <%= link_to 'Change password', edit_user_path(@user) %> |
 <% end %>
-<%if current_user.admin %>
+<%if current_user && current_user.admin %>
     <% if @user.suspended
          text = "Defreeze account"
        else

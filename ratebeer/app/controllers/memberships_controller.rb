@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :set_membership, only: [:show, :edit, :update, :destroy, :confirm]
 
   # GET /memberships
   # GET /memberships.json
@@ -57,12 +57,17 @@ class MembershipsController < ApplicationController
   # DELETE /memberships/1
   # DELETE /memberships/1.json
   def destroy
-    club = @membership.beer_club
     @membership.destroy
     respond_to do |format|
-      format.html { redirect_to beer_club_path(club), notice:"Membership in #{club} ended." }
+      format.html { redirect_to :back, notice:"Membership ended." }
       format.json { head :no_content }
     end
+  end
+
+  def confirm
+    membership = Membership.find(params[:id])
+    membership.update_attribute(:confirmed, true)
+    redirect_to :back, notice: "#{membership.user.username} confirmed as a member!"
   end
 
   private
@@ -73,6 +78,6 @@ class MembershipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def membership_params
-      params.require(:membership).permit(:user_id, :beer_club_id)
+      params.require(:membership).permit(:user_id, :beer_club_id, :id)
     end
 end

@@ -1,10 +1,13 @@
 class RatingsController < ApplicationController
   def index
-    @recent_ratings = Rating.recent 5
-    @best_beers = Beer.top 3
-    @best_breweries = Brewery.top 3
-    @top_raters = User.top_raters 3
-    @best_styles = Style.top 3
+    #Eventual consistency;
+    unless fragment_exist?('ratings')
+      @recent_ratings = Rating.recent 5
+      @best_beers = Beer.top 3
+      @best_breweries = Brewery.top 3
+      @top_raters = User.top_raters 3
+      @best_styles = Style.top 3
+    end
   end
 
   def new

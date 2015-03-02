@@ -24,4 +24,12 @@ class ApplicationController < ActionController::Base
       return
     end
   end
+
+  def change_order_direction
+    if session[:direction] == 'asc'
+      session[:direction] = 'desc'
+    else
+      session[:direction] = 'asc'
+    end
+  end
 end

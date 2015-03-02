@@ -40,4 +40,12 @@ Ratebeer::Application.routes.draw do
     post 'suspend', on: :member
   end
 
+  resources :memberships do
+    post 'confirm',on: :member
+  end
+
+  get 'beerlist', to:'beers#list'
+
+  get 'brewerylist', to: 'breweries#list'
+
 end

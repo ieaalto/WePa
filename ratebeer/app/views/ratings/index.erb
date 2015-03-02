@@ -1,6 +1,6 @@
 <h1>Ratings</h1>
+<% cache 'ratings', expires_in:10.minutes do%>
 <p>Number of ratings: <%= Rating.count %> </p>
-
 
 <div class="row">
   <div class="col-sm-9">
@@ -48,6 +48,7 @@
     </div>
   </div>
 </div>
+<% end %>
 <% if not current_user.nil?%>
 <%= link_to 'New rating', new_rating_path,class:"btn btn-primary"%>
 <% end%>

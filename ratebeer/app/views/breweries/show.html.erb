@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<% cache 'brewery', skip_digest:true do%>
 <h2> <%= @brewery.name %>
   <% if not @brewery.active  %>
       <span class="label label-info">retired</span>
@@ -29,4 +30,5 @@
 <%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), method: :post, class: "btn btn-primary" %>
 
 <%= link_to 'Edit', edit_brewery_path(@brewery),class:"btn btn-primary"%>
+<% end%>
 <%= link_to 'Back', breweries_path ,class:"btn btn-primary"%>
