@@ -16,9 +16,9 @@ class BeerClubsController < ApplicationController
       @membership = Membership.new
       @membership.user = current_user
       @membership.beer_club = @beer_club
-      @members = Membership.confirmed(@beer_club)
-      @unconfirmed = Membership.unconfirmed(@beer_club)
     end
+    @members = Membership.confirmed(@beer_club)
+    @unconfirmed = Membership.unconfirmed(@beer_club)
   end
 
   # GET /beer_clubs/new
